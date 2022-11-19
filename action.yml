@@ -15,7 +15,7 @@ runs:
       run: find . -not -path './.github/workflows/*' \( -name '*.json' -o -name '*.geojson' \) -exec yq -i -o json {} \;
     - shell: bash
       run: find . -not -path './.github/workflows/*' \( -name '*.yaml' -o -name '*.yml' \) -exec yq -i {} \;
-    - uses: dev-hato/actions-diff-pr-management@v1.0.8
+    - uses: dev-hato/actions-diff-pr-management@v1.0.9
       with:
         github-token: ${{inputs.github-token}}
         branch-name-prefix: fix-format-json-yml
