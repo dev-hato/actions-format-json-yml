@@ -24,6 +24,7 @@ jobs:
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
+          token: ${{secrets.CREATE_WORKFLOW_CI_TOKEN}}
       - uses: ./
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
