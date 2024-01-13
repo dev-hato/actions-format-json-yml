@@ -11,7 +11,7 @@ runs:
     - shell: bash
       if: github.event_name != 'pull_request' || github.event.action != 'closed'
       run: bash "${{ github.action_path }}/scripts/action/format.sh"
-    - uses: dev-hato/actions-diff-pr-management@v1.1.7
+    - uses: dev-hato/actions-diff-pr-management@v1.1.8
       with:
         github-token: ${{inputs.github-token}}
         branch-name-prefix: fix-format-json-yml
