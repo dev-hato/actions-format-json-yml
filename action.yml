@@ -8,13 +8,13 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - shell: bash
-      if: github.event_name != 'pull_request' || github.event.action != 'closed'
-      run: bash "${{ github.action_path }}/scripts/action/format.sh"
     - uses: actions/setup-node@v4.0.3
       if: github.event_name != 'pull_request' || github.event.action != 'closed'
       with:
         cache: npm
+    - shell: bash
+      if: github.event_name != 'pull_request' || github.event.action != 'closed'
+      run: bash "${{ github.action_path }}/scripts/action/format.sh"
     - if: github.event_name != 'pull_request' || github.event.action != 'closed'
       run: npm ci
       shell: bash
