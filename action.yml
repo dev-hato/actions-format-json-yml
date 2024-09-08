@@ -15,11 +15,11 @@ runs:
       if: github.event_name != 'pull_request' || github.event.action != 'closed'
       with:
         cache: npm
-    - name: Install packages
-      if: github.event_name != 'pull_request' || github.event.action != 'closed'
+    - if: github.event_name != 'pull_request' || github.event.action != 'closed'
       run: npm ci
       shell: bash
     - run: npx prettier --write .
+      if: github.event_name != 'pull_request' || github.event.action != 'closed'
       shell: bash
     - uses: dev-hato/actions-diff-pr-management@v1.1.12
       with:
