@@ -15,12 +15,12 @@ runs:
     - shell: bash
       if: github.event_name != 'pull_request' || github.event.action != 'closed'
       run: bash "${{ github.action_path }}/scripts/action/format.sh"
-    - if: github.event_name != 'pull_request' || github.event.action != 'closed'
-      run: npm ci
-      shell: bash
-    - run: npx prettier --write .
+    - shell: bash
       if: github.event_name != 'pull_request' || github.event.action != 'closed'
-      shell: bash
+      run: npm ci
+    - shell: bash
+      if: github.event_name != 'pull_request' || github.event.action != 'closed'
+      run: npx prettier --write .
     - uses: dev-hato/actions-diff-pr-management@v1.1.12
       with:
         github-token: ${{inputs.github-token}}
