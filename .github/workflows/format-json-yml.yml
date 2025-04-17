@@ -17,19 +17,12 @@ jobs:
   format-json-yml:
     runs-on: ubuntu-latest
     steps:
-      - name: Generate a token
-        id: generate_token
-        uses: actions/create-github-app-token@3ff1caaa28b64c9cc276ce0a02e2ff584f3900c5 # v2.0.2
-        if: github.event_name != 'pull_request' || github.event.action != 'closed'
-        with:
-          app-id: ${{ secrets.PROJECT_AUTOMATION_APP_ID }}
-          private-key: ${{ secrets.PROJECT_AUTOMATION_PRIVATE_KEY }}
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         if: github.event_name != 'pull_request' || github.event.action != 'closed'
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
-          token: ${{ steps.generate_token.outputs.token }}
+          persist-credentials: false
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         if: github.event_name != 'pull_request' || github.event.action != 'closed'
         with:
@@ -37,6 +30,13 @@ jobs:
           cache: npm
       - if: github.event_name != 'pull_request' || github.event.action != 'closed'
         run: npm ci
+      - name: Generate a token
+        id: generate_token
+        uses: actions/create-github-app-token@3ff1caaa28b64c9cc276ce0a02e2ff584f3900c5 # v2.0.2
+        if: github.event_name != 'pull_request' || github.event.action != 'closed'
+        with:
+          app-id: ${{ secrets.PROJECT_AUTOMATION_APP_ID }}
+          private-key: ${{ secrets.PROJECT_AUTOMATION_PRIVATE_KEY }}
       - uses: ./
         with:
           github-token: ${{ steps.generate_token.outputs.token }}
