@@ -13,7 +13,7 @@ runs:
       run: bash "${{ github.action_path }}/scripts/action/format.sh"
     - shell: bash
       if: github.event_name != 'pull_request' || github.event.action != 'closed'
-      run: find . \( -name '*.json' -o -name '*.geojson' -o -name '*.yaml' -o -name '*.yml' \) -not -path './node_modules/*' -exec npx prettier --write {} \;
+      run: find . -type f \( -name '*.json' -o -name '*.geojson' -o -name '*.yaml' -o -name '*.yml' \) -not -path './node_modules/*' -exec npx prettier --write {} \;
     - uses: dev-hato/actions-diff-pr-management@b3530e809a1948d0187f47a67d4164a47e03d7ec # v2.1.1
       with:
         github-token: ${{inputs.github-token}}
