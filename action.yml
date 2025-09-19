@@ -14,7 +14,7 @@ runs:
     - shell: bash
       if: github.event_name != 'pull_request' || github.event.action != 'closed'
       run: find . -type f \( -name '*.json' -o -name '*.geojson' -o -name '*.yaml' -o -name '*.yml' \) -not -path './node_modules/*' -exec npx prettier --write {} \;
-    - uses: dev-hato/actions-diff-pr-management@b3530e809a1948d0187f47a67d4164a47e03d7ec # v2.1.1
+    - uses: dev-hato/actions-diff-pr-management@ac4f08dda423d2793a7acdd58c831ed5a0f19136 # v2.2.0
       with:
         github-token: ${{inputs.github-token}}
         branch-name-prefix: fix-format-json-yml
