@@ -18,7 +18,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
-        if: github.event_name != 'pull_request' || github.event.action != 'closed'
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
@@ -33,7 +32,6 @@ jobs:
       - name: Generate a token
         id: generate_token
         uses: actions/create-github-app-token@7e473efe3cb98aa54f8d4bac15400b15fad77d94 # v2.2.0
-        if: github.event_name != 'pull_request' || github.event.action != 'closed'
         with:
           app-id: ${{ secrets.PROJECT_AUTOMATION_APP_ID }}
           private-key: ${{ secrets.PROJECT_AUTOMATION_PRIVATE_KEY }}
