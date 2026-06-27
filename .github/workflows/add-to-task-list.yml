@@ -20,7 +20,6 @@ jobs:
           client-id: ${{ secrets.PROJECT_AUTOMATION_APP_CLIENT_ID }} # zizmor: ignore[secrets-outside-env]
           private-key: ${{ secrets.PROJECT_AUTOMATION_PRIVATE_KEY }} # zizmor: ignore[secrets-outside-env]
           permission-organization-projects: write
-          permission-issues: read
           permission-pull-requests: read
       - uses: dev-hato/actions-add-to-projects@f807db51e3f02f481e24c630e6a39f6e54939a04 # v1.0.7
         with:
