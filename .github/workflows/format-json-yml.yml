@@ -37,6 +37,7 @@ jobs:
           private-key: ${{ secrets.PROJECT_AUTOMATION_PRIVATE_KEY }} # zizmor: ignore[secrets-outside-env]
           permission-contents: write
           permission-pull-requests: write
+          permission-workflows: write
       - uses: ./
         with:
           github-token: ${{ steps.generate_token.outputs.token }}
