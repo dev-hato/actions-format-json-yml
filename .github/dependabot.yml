@@ -1,0 +1,16 @@
+---
+version: 2
+registries:
+  npm-flatt:
+    type: npm-registry
+    url: https://npm.flatt.tech/
+    replaces-base: true
+updates:
+  - package-ecosystem: npm
+    directory: /
+    registries:
+      - npm-flatt
+    schedule:
+      interval: weekly
+    # Renovate handles version updates; Dependabot handles security updates.
+    open-pull-requests-limit: 0
