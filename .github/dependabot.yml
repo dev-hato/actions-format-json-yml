@@ -1,15 +1,9 @@
 ---
 version: 2
-registries:
-  npm-flatt:
-    type: npm-registry
-    url: https://npm.flatt.tech/
-    replaces-base: true
 updates:
   - package-ecosystem: npm
     directory: /
-    registries:
-      - npm-flatt
+    # Use https://npm.flatt.tech/ from the project's .npmrc without authentication.
     schedule:
       interval: weekly
     # Cooldown applies only to version updates, not security updates.
