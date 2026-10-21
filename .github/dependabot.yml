@@ -12,5 +12,8 @@ updates:
       - npm-flatt
     schedule:
       interval: weekly
+    # Cooldown applies only to version updates, not security updates.
+    cooldown:
+      default-days: 7
     # Renovate handles version updates; Dependabot handles security updates.
     open-pull-requests-limit: 0
