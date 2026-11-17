@@ -10,9 +10,10 @@ on:
   push:
     branches:
       - main
+  merge_group:
+# 書き込みはGitHub Appのトークンで行うため、GITHUB_TOKENは読み取り権限のみとする
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
 jobs:
   format-json-yml:
     timeout-minutes: 30
@@ -32,9 +33,12 @@ jobs:
         uses: flatt-security/setup-takumi-guard-npm@14f07d0cbc739b42a1b7c70a04c2b84cd1318ddd # v1.4.0
       - if: github.event_name != 'pull_request' || github.event.action != 'closed'
         run: npm ci
+      # 修正PRの操作はpushとフォーク以外からのpull_requestのみで行う。それ以外のイベントでは差分の検証のみを行うため、書き込み用のトークンは発行しない
+      # フォークからのPRでは、修正PRを操作せずに差分の検証のみを行う
       - name: Generate a token
         id: generate_token
         uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository)
         with:
           client-id: ${{ secrets.PROJECT_AUTOMATION_APP_CLIENT_ID }} # zizmor: ignore[secrets-outside-env]
           private-key: ${{ secrets.PROJECT_AUTOMATION_PRIVATE_KEY }} # zizmor: ignore[secrets-outside-env]
@@ -43,7 +47,7 @@ jobs:
           permission-workflows: write
       - uses: $/
         with:
-          github-token: ${{ steps.generate_token.outputs.token }}
+          github-token: ${{ steps.generate_token.outputs.token || github.token }}
 concurrency:
   group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
   cancel-in-progress: true
